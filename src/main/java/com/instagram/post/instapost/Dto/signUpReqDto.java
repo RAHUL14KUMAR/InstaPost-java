@@ -1,16 +1,13 @@
 package com.instagram.post.instapost.Dto;
 
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-public class signUpDto {
-    private Long id;
+public class signUpReqDto {
     private String username;
 
-    @Email
+    @Email(message = "Invalid email format")
     private String email;
 
     private String password;

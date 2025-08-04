@@ -7,5 +7,5 @@ import com.instagram.post.instapost.Entity.UserEntity;
 
 @Repository
 public interface userRepo extends JpaRepository<UserEntity, Long>{
-    
+    boolean existsByEmail(String email);
 }
