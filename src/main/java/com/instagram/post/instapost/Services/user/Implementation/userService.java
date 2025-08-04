@@ -1,13 +1,16 @@
 package com.instagram.post.instapost.Services.user.Implementation;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.instagram.post.instapost.Dto.categoryDto;
 import com.instagram.post.instapost.Dto.profileDto;
 import com.instagram.post.instapost.Dto.signUpReqDto;
 import com.instagram.post.instapost.Dto.signUpRespDto;
+import com.instagram.post.instapost.Entity.CategoryEntity;
 import com.instagram.post.instapost.Entity.UserEntity;
 import com.instagram.post.instapost.Repository.categoryRepo;
 import com.instagram.post.instapost.Repository.userRepo;
@@ -63,7 +66,14 @@ public class userService implements userServiceInterface {
         }
 
         if(user.getUserInterestInCategory() != null) {
-            profile.setUserInterestInCategory(user.getUserInterestInCategory());
+            Set<categoryDto> categories = user.getUserInterestInCategory().stream().map(cat -> {
+                // System.out.println(cat);
+                categoryDto dto = new categoryDto(cat.getId(),cat.getCategoryName());
+                // System.out.println("cat->"+cat);
+                return dto;
+            }).collect(Collectors.toSet());
+
+            profile.setUserInterestInCategory(categories);
         } else {
             profile.setUserInterestInCategory(null);
         }
@@ -72,18 +82,22 @@ public class userService implements userServiceInterface {
         return profile;
     }
     @Override
-    public boolean updateUserProfile(Long userId, Object profile) {
+    public boolean updateUserInterest(Long userId, Long[] profile) {
         // user is now adding the interest in the category
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
 
-        // Cast the object to the correct type
-        profileDto profileData = (profileDto) profile;
+        Set<CategoryEntity> categories=new HashSet<>();
 
-        // fetch all the categories id fromt the profileData
-        Set<Long> categories = categoryRepository.findAllById(profileData.getUserInterestInCategory());
+        for(Long id:profile){
+            CategoryEntity category=categoryRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Category with this id not found: "+id));
+            categories.add(category);
+        }
 
-        // Update user details
-        user.setUserInterestInCategory(profileData.getUserInterestInCategory());
+        user.setUserInterestInCategory(categories);
+
+        for(CategoryEntity cat:categories){
+            cat.getUsers().add(user);
+        }
         userRepository.save(user);
 
         return true;

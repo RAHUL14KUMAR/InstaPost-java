@@ -65,8 +65,8 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public boolean userUpdateProfile(@PathVariable Long id, @RequestBody Object entity) {
-        return userserv.updateUserProfile(id, entity);
+    public boolean userUpdateProfile(@PathVariable Long id, @RequestBody Long[] entity) {
+        return userserv.updateUserInterest(id, entity);
     }
     
     

@@ -8,5 +8,5 @@ import com.instagram.post.instapost.Dto.signUpRespDto;
 public interface userServiceInterface {
     signUpRespDto addUserInDb(signUpReqDto user);
     profileDto getUserProfile(Long userId);
-    boolean updateUserProfile(Long userId, Object profile);
+    boolean updateUserInterest(Long userId, Long[] profile);
 }

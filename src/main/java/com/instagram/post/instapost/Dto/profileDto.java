@@ -16,7 +16,7 @@ public class profileDto {
     @Email(message = "Invalid email format")
     private String email;
 
-    private Set<Long> userInterestInCategory;
+    private Set<categoryDto> userInterestInCategory;
 
     private List<PostEntity> posts;
 }
