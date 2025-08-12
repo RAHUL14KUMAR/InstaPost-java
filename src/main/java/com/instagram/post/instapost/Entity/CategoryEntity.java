@@ -15,7 +15,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"posts", "users"})
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

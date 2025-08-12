@@ -3,8 +3,6 @@ package com.instagram.post.instapost.Dto;
 import java.util.List;
 import java.util.Set;
 
-import com.instagram.post.instapost.Entity.PostEntity;
-
 import jakarta.validation.constraints.Email;
 import lombok.Data;
 
@@ -18,5 +16,5 @@ public class profileDto {
 
     private Set<categoryDto> userInterestInCategory;
 
-    private List<PostEntity> posts;
+    private List<userPostDto> posts;
 }

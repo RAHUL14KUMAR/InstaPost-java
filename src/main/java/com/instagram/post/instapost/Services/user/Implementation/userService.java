@@ -10,6 +10,7 @@ import com.instagram.post.instapost.Dto.categoryDto;
 import com.instagram.post.instapost.Dto.profileDto;
 import com.instagram.post.instapost.Dto.signUpReqDto;
 import com.instagram.post.instapost.Dto.signUpRespDto;
+import com.instagram.post.instapost.Dto.userPostDto;
 import com.instagram.post.instapost.Entity.CategoryEntity;
 import com.instagram.post.instapost.Entity.UserEntity;
 import com.instagram.post.instapost.Repository.categoryRepo;
@@ -60,7 +61,13 @@ public class userService implements userServiceInterface {
         profile.setUsername(user.getUsername());
         profile.setEmail(user.getEmail());
         if(user.getPosts() != null) {
-            profile.setPosts(user.getPosts());
+            profile.setPosts(
+                user.getPosts()
+                    .stream()
+                    .map(post -> new userPostDto(post.getId(), post.getPostDesc()))
+                    .collect(Collectors.toList())
+            );
+
         } else {
             profile.setPosts(null);
         }

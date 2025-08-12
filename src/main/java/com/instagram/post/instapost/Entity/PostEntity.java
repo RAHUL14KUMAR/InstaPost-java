@@ -13,10 +13,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString(exclude = {"postCategory", "user"})
 @Table(name="postsTable")
 public class PostEntity {
     @Id
@@ -26,10 +28,15 @@ public class PostEntity {
     private String postDesc;
 
     @ManyToMany
-    @JoinTable(name="post_category",joinColumns=@JoinColumn(name="post_id"),inverseJoinColumns=@JoinColumn(name="category_id"))
+    @JoinTable(
+        name="post_category",
+        joinColumns=@JoinColumn(name="post_id"),
+        inverseJoinColumns=@JoinColumn(name="category_id")
+    )
     private Set<CategoryEntity> postCategory;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private UserEntity user;
 }
+

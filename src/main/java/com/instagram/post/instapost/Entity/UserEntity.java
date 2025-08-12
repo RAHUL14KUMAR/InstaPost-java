@@ -40,11 +40,12 @@ public class UserEntity {
     @Column(nullable=false)
     private String Password;
 
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(name="user_category",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="category_id"))
     private Set<CategoryEntity> userInterestInCategory;
 
-    @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
     @ToString.Exclude
+    @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
     private List<PostEntity> posts;
 }
