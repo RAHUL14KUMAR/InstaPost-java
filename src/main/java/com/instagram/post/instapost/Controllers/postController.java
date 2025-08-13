@@ -49,7 +49,4 @@ public class postController {
     public boolean deletePost(@PathVariable Long postId){
         return postServ.deletePost(postId);
     }
-
-    
-    
 }
