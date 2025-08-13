@@ -39,7 +39,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.csrf(csrf -> csrf.disable()).exceptionHandling(exceptionHandling ->exceptionHandling.authenticationEntryPoint(unauthorizedHandler)).authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/add-user","swagger-ui/****","/login").permitAll().anyRequest().authenticated());
+        http.csrf(csrf -> csrf.disable()).exceptionHandling(exceptionHandling ->exceptionHandling.authenticationEntryPoint(unauthorizedHandler)).authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/add-user","/v3/**", "/swagger-ui/**","/login").permitAll().anyRequest().authenticated());
 
             http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
             return http.build();
