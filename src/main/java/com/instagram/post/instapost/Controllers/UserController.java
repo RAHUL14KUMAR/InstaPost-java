@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.instagram.post.instapost.Dto.ResponseDto;
+import com.instagram.post.instapost.Dto.loginResDto;
 import com.instagram.post.instapost.Dto.profileDto;
 import com.instagram.post.instapost.Dto.signUpReqDto;
 import com.instagram.post.instapost.Dto.signUpRespDto;
@@ -68,6 +69,12 @@ public class UserController {
     public boolean userUpdateProfile(@PathVariable Long id, @RequestBody Long[] entity) {
         return userserv.updateUserInterest(id, entity);
     }
+
+    @PostMapping("/login")
+    public loginResDto loginServiceCalled(@RequestBody signUpReqDto user) {
+        return userserv.login(user);
+    }
+    
     
     
 }

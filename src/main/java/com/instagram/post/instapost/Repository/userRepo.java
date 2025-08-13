@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.instagram.post.instapost.Entity.UserEntity;
 
+
 @Repository
 public interface userRepo extends JpaRepository<UserEntity, Long>{
     boolean existsByEmail(String email);
+    UserEntity findByUsername(String username);
+    UserEntity findByEmail(String email);
 }
