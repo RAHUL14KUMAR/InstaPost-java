@@ -45,6 +45,8 @@ public class JwtUtil {
         .getBody()
         .getSubject();
 
+        System.out.println("user id from token extract"+num);
+
         return Long.parseLong(num);
     }
 

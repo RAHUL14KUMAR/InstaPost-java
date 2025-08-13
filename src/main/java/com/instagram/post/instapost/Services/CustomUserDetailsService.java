@@ -1,7 +1,5 @@
 package com.instagram.post.instapost.Services;
 
-import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,11 +29,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUserId(long id) throws UsernameNotFoundException {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + id));
         
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                Collections.emptyList()
-        );
+        // return new org.springframework.security.core.userdetails.User(
+        //         user.getUsername(),
+        //         user.getPassword(),
+        //         Collections.emptyList()
+        // );
+        return user;
     }
 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

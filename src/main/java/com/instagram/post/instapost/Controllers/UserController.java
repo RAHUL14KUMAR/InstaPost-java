@@ -1,6 +1,8 @@
 package com.instagram.post.instapost.Controllers;
 
+// import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import com.instagram.post.instapost.Dto.loginResDto;
 import com.instagram.post.instapost.Dto.profileDto;
 import com.instagram.post.instapost.Dto.signUpReqDto;
 import com.instagram.post.instapost.Dto.signUpRespDto;
+import com.instagram.post.instapost.Entity.UserEntity;
 import com.instagram.post.instapost.Exeption.UserException;
 import com.instagram.post.instapost.Services.user.Implementation.userService;
 
@@ -48,10 +51,12 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<ResponseDto> getUserProfileDetails(@PathVariable("id") Long userId) {
+    @GetMapping("/user")
+    public ResponseEntity<ResponseDto> getUserProfileDetails(Authentication authentication) {
         try{
-            profileDto result= userserv.getUserProfile(userId);
+            UserEntity user = (UserEntity) authentication.getPrincipal();
+            System.out.println("user form controller"+user);
+            profileDto result= userserv.getUserProfile(user.getId());
             ResponseDto resp = new ResponseDto();
             resp.setAnswer(result);
             resp.setMessage("User profile fetched successfully");
